@@ -7,18 +7,17 @@ import 'zoom_native_sdk_platform_interface.dart';
 class MethodChannelZoomNativeSdk extends ZoomNativeSdkPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('zoom_native_sdk');
+  final methodChannel = const MethodChannel('pruoo_zoom_native_sdk');
 
   @override
   Future<bool?> initZoom({
-    required String appKey,
-    required String appSecret,
+    required String token,
+
   }) async {
     final version = await methodChannel.invokeMethod<bool>(
       'initZoom',
       {
-        "appKey": appKey,
-        "appSecret": appSecret,
+        "token": token,
       },
     );
     return version;

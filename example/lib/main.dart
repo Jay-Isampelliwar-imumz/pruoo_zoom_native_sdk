@@ -1,7 +1,8 @@
-import 'dart:async';
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:zoom_native_sdk/zoom_native_sdk.dart';
 
 void main() {
@@ -23,6 +24,18 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
+    requestPermissions();
+  }
+
+  Future<void> requestPermissions() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.camera,
+      Permission.microphone,
+      Permission.storage,
+      Permission.location,
+      Permission.notification,
+    ].request();
+    print(statuses);
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -33,9 +46,8 @@ class _MyAppState extends State<MyApp> {
     try {
       if (!isInitialized) {
         isInitialized = (await _zoomNativelyPlugin.initZoom(
-              appKey: "",
-              appSecret: "",
-            )) ??
+            token:
+            "")) ??
             false;
       }
     } on PlatformException catch (e) {
@@ -58,18 +70,28 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: ElevatedButton(
             onPressed: () async {
-              debugPrint("joinMeting -> isInitialized = $isInitialized");
-              if (isInitialized) {
-                await _zoomNativelyPlugin.joinMeting(
-                  meetingNumber: "",
-                  meetingPassword: "",
-                );
-              }
+              joinMeeting();
             },
             child: const Text("join"),
           ),
         ),
       ),
     );
+  }
+
+  void joinMeeting() async {
+    try {
+      debugPrint("joinMeting -> isInitialized = $isInitialized");
+      if (isInitialized) {
+        await _zoomNativelyPlugin.joinMeting(
+          meetingNumber: "93993906817".replaceAll(" ", ""),
+          meetingPassword: "j0Uygt",
+        );
+      }
+    } on PlatformException catch (e) {
+      print(e.toString());
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

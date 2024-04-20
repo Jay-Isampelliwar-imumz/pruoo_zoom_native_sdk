@@ -24,8 +24,7 @@ abstract class ZoomNativeSdkPlatform extends PlatformInterface {
   }
 
   Future<bool?> initZoom({
-    required String appKey,
-    required String appSecret,
+    required String token,
   }) {
     throw UnimplementedError('initZoom() has not been implemented.');
   }

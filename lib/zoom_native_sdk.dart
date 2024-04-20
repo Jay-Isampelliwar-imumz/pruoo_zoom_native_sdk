@@ -1,17 +1,17 @@
+
 import 'package:flutter/material.dart';
 
 import 'zoom_native_sdk_platform_interface.dart';
 
 class ZoomNativeSdk {
   Future<bool?> initZoom({
-    required String appKey,
-    required String appSecret,
+    required String token,
+
   }) {
     debugPrint("ZoomNatively-initZoom");
 
     return ZoomNativeSdkPlatform.instance.initZoom(
-      appKey: appKey,
-      appSecret: appSecret,
+      token: token,
     );
   }
 
